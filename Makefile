@@ -18,4 +18,4 @@ migrations:
 	cd ./SolarCoffee.Data && dotnet ef migrations add $(mname)  --startup-project ../SolarCoffee.Web/ && cd ..
 
 db:
-	cd ./SolarCoffee.Data && dotnet ef database update --startup-project ../SolarCoffee.Web/ && cd..
+	cd ./SolarCoffee.Data && dotnet ef database update --startup-project ../SolarCoffee.Web/ && cd ..
