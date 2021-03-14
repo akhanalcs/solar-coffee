@@ -23,5 +23,12 @@
     <ProjectReference Include="..\SolarCoffee.Data\SolarCoffee.Data.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\SolarCoffee.Services\SolarCoffee.Services.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+    <Folder Include="Serialization\" />
   </ItemGroup>
 </Project>

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace SolarCoffee.Data.Models
+namespace SolarCoffee.Web.ViewModels
 {
-    public class Product
+    /// <summary>
+    /// Product entity DTO. Properties here are lining up one to one as we have in our entity.
+    /// </summary>
+    public class ProductViewModel
     {
         public int Id { get; set; }
-        [MaxLength(64)]
         public string Name { get; set; }
-        [MaxLength(128)]
         public string Description { get; set; }
         public decimal Price { get; set; }
         public bool IsTaxable { get; set; }

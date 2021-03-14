@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SolarCoffee.Data;
 using Microsoft.EntityFrameworkCore;
+using SolarCoffee.Services.Product;
 
 namespace SolarCoffee.Web
 {
@@ -28,7 +29,6 @@ namespace SolarCoffee.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddDbContext<SolarDbContext>(opts=> {
                 opts.EnableDetailedErrors();
@@ -39,6 +39,8 @@ namespace SolarCoffee.Web
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SolarCoffee.Web", Version = "v1" });
             });
+
+            services.AddTransient<IProductService, ProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
