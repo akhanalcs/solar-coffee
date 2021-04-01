@@ -8,7 +8,7 @@ namespace SolarCoffee.Services.Order
     public interface IOrderService
     {
         List<SalesOrder> GetSalesOrders();
-        ServiceResponse<bool> GenerateInvoiceForOrder(SalesOrder salesOrder); //ServiceResponse that use bool as the T Data to send back
+        ServiceResponse<bool> GenerateOpenOrder(SalesOrder salesOrder); //ServiceResponse that use bool as the T Data to send back
         ServiceResponse<bool> MarkFulfilled(int id);
     }
 }

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SolarCoffee.Data;
 using SolarCoffee.Data.Models;
+using SolarCoffee.Services.Inventory;
+using SolarCoffee.Services.Product;
 
 namespace SolarCoffee.Services.Order
 {
@@ -12,16 +14,54 @@ namespace SolarCoffee.Services.Order
     {
         private readonly SolarDbContext _db;
         private readonly ILogger<OrderService> _logger;
+        private readonly IProductService _productService;
+        private readonly IInventoryService _inventoryService;
 
-        public OrderService(SolarDbContext dbContext, ILogger<OrderService> logger)
+        public OrderService(SolarDbContext dbContext, ILogger<OrderService> logger, IProductService productService, IInventoryService inventoryService)
         {
             _db = dbContext;
             _logger = logger;
+            _productService = productService;
+            _inventoryService = inventoryService;
         }
-        
-        public ServiceResponse<bool> GenerateInvoiceForOrder(SalesOrder salesOrder)
+
+        /// <summary>
+        /// Creates an open sales order
+        /// </summary>
+        /// <param name="salesOrder"></param>
+        /// <returns></returns>
+        public ServiceResponse<bool> GenerateOpenOrder(SalesOrder salesOrder)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Generating new order");
+            foreach (var item in salesOrder.SalesOrderItems)
+            {
+                var inventoryId = _inventoryService.GetProductInventoryByProductId(item.Product.Id).Id;
+                _inventoryService.UpdateUnitsAvailable(inventoryId, -item.Quantity);
+            }
+
+            try
+            {
+                _db.SalesOrders.Add(salesOrder);
+                _db.SaveChanges();
+
+                return new ServiceResponse<bool>
+                {
+                    IsSuccess = true,
+                    Message = "Open order created",
+                    Time = DateTime.UtcNow,
+                    Data = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<bool>
+                {
+                    IsSuccess = false,
+                    Message = ex.StackTrace,
+                    Time = DateTime.UtcNow,
+                    Data = false
+                };
+            }
         }
 
         /// <summary>
@@ -32,13 +72,47 @@ namespace SolarCoffee.Services.Order
         {
             return _db.SalesOrders
                       .Include(so => so.Customer)
+                        .ThenInclude(c => c.PrimaryAddress)
                       .Include(so => so.SalesOrderItems)
+                        .ThenInclude(i => i.Product)
                       .ToList();
         }
 
+        /// <summary>
+        /// Marks an open sales order as paid
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ServiceResponse<bool> MarkFulfilled(int id)
         {
-            throw new NotImplementedException();
+            var now = DateTime.UtcNow;
+            var order = _db.SalesOrders.Find(id);
+            order.IsPaid = true;
+            order.UpdatedOn = now;
+
+            try
+            {
+                _db.SalesOrders.Update(order);
+                _db.SaveChanges();
+
+                return new ServiceResponse<bool>
+                {
+                    IsSuccess = true,
+                    Message = $"Order {order.Id} closed: Invoice paid in full.",
+                    Time = now,
+                    Data = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<bool>
+                {
+                    IsSuccess = false,
+                    Message = ex.StackTrace,
+                    Time = now,
+                    Data = false
+                };
+            }
         }
     }
 }

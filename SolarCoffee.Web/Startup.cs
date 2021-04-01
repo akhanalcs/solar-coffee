@@ -14,6 +14,9 @@ using Microsoft.OpenApi.Models;
 using SolarCoffee.Data;
 using Microsoft.EntityFrameworkCore;
 using SolarCoffee.Services.Product;
+using SolarCoffee.Services.Order;
+using SolarCoffee.Services.Inventory;
+using SolarCoffee.Services.Customer;
 
 namespace SolarCoffee.Web
 {
@@ -42,7 +45,8 @@ namespace SolarCoffee.Web
 
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IOrderService, OrderService>();
-
+            services.AddTransient<IInventoryService, InventoryService>();
+            services.AddTransient<ICustomerService, CustomerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
