@@ -9,8 +9,5 @@ namespace SolarCoffee.Web.ViewModels
         public int IdealQuantity { get; set; }
 
         public ProductViewModel Product { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
     }
 }

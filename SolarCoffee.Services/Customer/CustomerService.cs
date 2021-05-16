@@ -6,6 +6,7 @@ using SolarCoffee.Data;
 
 namespace SolarCoffee.Services.Customer
 {
+    ////Data.Models.Customer because we have name of class that is the same as the name of the namespace
     public class CustomerService : ICustomerService
     {
         private readonly SolarDbContext _db;

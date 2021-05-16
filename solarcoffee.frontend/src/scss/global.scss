@@ -1,0 +1,43 @@
+// Declare variables globally
+$solar-blue: #2273db;
+$solar-red: #cc3020;
+$solar-green: #22a885;
+$solar-yellow: #FFBD59;
+
+$menu-width: 240px;
+
+body{
+    margin: auto;
+    padding: 0;
+}
+
+.table{
+    border: 1px solid red;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    border-collapse: collapse; //Each cell in the table has a separate border. With collapse the border-spacing: 1rem; doesn't mean a thing. By default it's border-collapse: separate;
+    border-spacing: 1rem;
+
+    th{
+        //border: 1px solid red;
+        padding: 1.5rem;
+        background-color: #fafafa;
+        border-bottom: 2px solid $solar-blue;
+    }
+
+    td{
+        //border: 1px solid red;
+        padding: 1rem;
+    }
+
+    tr{
+        border-top: 1px solid blue;
+        border-bottom: 2px solid green;
+
+        &:hover{
+            background-color: #f5f5f5;
+            transition: background-color 0.3s;
+        }
+    }
+}

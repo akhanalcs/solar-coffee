@@ -1,20 +1,17 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/Home.vue";
+import Inventory from "@/views/Inventory.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
     name: "Home",
-    component: Home
+    path: "/",
+    //component: Inventory, because we have this: "export default class Inventory extends Vue {}" in Inventory.vue and we have this here: import Inventory from "@/views/Inventory.vue";
+    component: Inventory
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    name: "Inventory",
+    path: "/inventory",
+    component: Inventory
   }
 ];
 

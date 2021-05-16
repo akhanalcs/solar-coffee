@@ -13,9 +13,7 @@ namespace SolarCoffee.Web.Serialization
                 Id = productInventory.Id,
                 Product = ProductMapper.SerializeProductModel(productInventory.Product),
                 IdealQuantity = productInventory.IdealQuantity,
-                QuantityOnHand = productInventory.QuantityOnHand,
-                CreatedOn = productInventory.CreatedOn,
-                UpdatedOn = productInventory.UpdatedOn
+                QuantityOnHand = productInventory.QuantityOnHand
             };
         }
 
@@ -26,9 +24,7 @@ namespace SolarCoffee.Web.Serialization
                 Id = productInventoryViewModel.Id,
                 Product = ProductMapper.SerializeProductModel(productInventoryViewModel.Product),
                 IdealQuantity = productInventoryViewModel.IdealQuantity,
-                QuantityOnHand = productInventoryViewModel.QuantityOnHand,
-                CreatedOn = productInventoryViewModel.CreatedOn,
-                UpdatedOn = productInventoryViewModel.UpdatedOn
+                QuantityOnHand = productInventoryViewModel.QuantityOnHand
             };
         }
     }
